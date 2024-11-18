@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h1 class="mb-4">Случайная цитата</h1>
+        <blockquote class="blockquote">
+            <p class="mb-0" id="quote">{{ quote }}</p>
+            <footer class="blockquote-footer" id="author">{{ author }}</footer>
+        </blockquote>
+        <button id="new-quote-btn" class="btn btn-primary mt-4">Новая цитата</button>
+    </div>
+
+    <script>
+        document.getElementById("new-quote-btn").addEventListener("click", function() {
+            fetch("/quote")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("quote").textContent = data.quote;
+                    document.getElementById("author").textContent = data.author;
+                })
+                .catch(error => console.error("Ошибка при загрузке цитаты:", error));
+        });
+    </script>
+</body>
+</html>
