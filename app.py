@@ -16,7 +16,7 @@ def get_random_quote():
 @app.route("/")
 def index():
     quote, author = get_random_quote()
-    return render_template("index2.html", quote=quote, author=author)
+    return render_template("index.html", quote=quote, author=author)
 
 @app.route("/quote")
 def quote():
