@@ -5,12 +5,13 @@ app = Flask(__name__)
 
 def get_random_quote():
     try:
-        response = requests.get("https://zenquotes.io/api/random")
+        response = requests.get("https://zenquotes.io/api/random", timeout=5)
         response.raise_for_status()
         data = response.json()
-        return data[0]["q"], data[0]["a"]  # Возвращает цитату и автора
-    except requests.RequestException as e:
-        print(f"Ошибка при получении цитаты: {e}")
+        return data[0]["q"], data[0]["a"]
+    except requests.exceptions.Timeout:
+        return "Ошибка: превышено время ожидания запроса", "Сервер недоступен"
+    except requests.exceptions.RequestException:
         return "Ошибка при получении цитаты", "Неизвестный автор"
 
 @app.route("/")
